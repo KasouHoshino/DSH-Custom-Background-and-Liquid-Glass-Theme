@@ -1,222 +1,208 @@
-<div align="center">
+# dsh-custom-background · v1.1.0 · script install
 
-<h1>DeepSeek Harness 自定义背景插件</h1>
+Custom wallpaper + frosted glass materials for the DSH Web GUI, with a settings row.
 
-**DeepSeek Harness Custom Background Plugin** · by [Nagisa](https://github.com/KasouHoshino) · `v1.1.0`
+This is the **script-only** copy: it ships no installer EXE and no build tooling. Install it with `install.ps1`, or hand the folder to an agent and point it at `AGENT_INSTALL.md`.
 
-换主题 · 自定义背景 · HUD 液态玻璃材质
+## Install
 
-![version](https://img.shields.io/badge/version-1.1.0-4C6EF5?style=flat-square)
-![platform](https://img.shields.io/badge/platform-DeepSeek_Harness-7C3AED?style=flat-square)
-![i18n](https://img.shields.io/badge/i18n-10_languages-2EA44F?style=flat-square)
-![material](https://img.shields.io/badge/material-liquid_glass-FE7EB8?style=flat-square)
-![license](https://img.shields.io/badge/license-MIT-blue?style=flat-square)
 
-[**简体中文**](#简体中文) · [English](#english)
-
-</div>
-
----
-
-## 简体中文
-
-### 简介
-
-一个 DeepSeek Harness 主题扩展：换上你自己的背景图或背景视频，再给整个界面铺一层参考 Apple iOS 设计风格的液态玻璃材质。
-
-- **主题 + 自定义背景** —— 图片与视频都能当背景，GIF / 动态 WebP 保留动画
-- **HUD 液态玻璃** —— 一套材质贯穿聊天、输入区、面板与弹层，由两个滑块统一驱动
-- **10 种界面语言** —— 安装时选定，之后也能在设置里切换
-- **内置诊断工具** —— 一组 <kbd>Alt</kbd> 快捷键，用于重新定位元素、排查材质冲突
-
-### 支持的背景格式
-
-| 兼容性 | 格式 |
-| :-- | :-- |
-| **支持** | PNG · JPEG / JPG · GIF · 静态 WebP · 动态 WebP · AVIF · H.264 编码的 MP4 · VP8 / VP9 的 WebM |
-| **部分情况下支持** | MP4 + H.265 / HEVC · MOV / M4V · OGG · BMP · SVG |
-| **不支持** | HEIC / HEIF · AVI · MKV · WMV · FLV · TIFF |
-
-「部分情况下支持」取决于容器与编码的组合，能否播放还受运行环境影响。遇到加载不出来的素材，先转成「支持」一栏里的格式再试一次。
-
-### 液态玻璃
-
-参考 Apple iOS 的设计风格：一套材质贯穿大部分表面，全部由两个滑块驱动，调一处即全局统一。
-
-| 区域 | 覆盖的表面 |
-| :-- | :-- |
-| **聊天** | 消息气泡、消息卡片、代码块（含标题行）、行内代码、标签条 |
-| **输入区** | 输入框卡片、下方小组件、命令预览面板 |
-| **面板** | 引导面板、侧边面板、滚动视图、终端屏幕 |
-| **弹层** | 对话框、菜单、上下文提示气泡、文件预览卡片、工具卡片 |
-
-### 安装
-
-两种方式，任选其一。
-
-#### 方式一：EXE 安装包
-
-1. 从 Releases 下载 `dsh-custom-background-setup_by_Nagisa.exe` 并运行
-2. 选择安装目录（默认 `%LOCALAPPDATA%\DSH\plugins\dsh-custom-background_by_Nagisa`）
-3. 选择界面语言
-4. 可选：勾选安装完成后自动重启 DSH
-
-安装包是未签名的自解压程序，SmartScreen 可能提示一次，选择「更多信息 → 仍要运行」即可。全程不需要 Node、终端或手动复制文件。
-
-#### 方式二：工作区安装
-
-面向开发者，也可以让智能体直接把插件装进工作区。在插件目录执行：
+No copying required: the profile links to this folder, so the plugin keeps living wherever
+it is. Run the script from the folder and restart DSH:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\install.ps1
 ```
 
-然后重启 DSH。脚本会把插件以 `link:` 方式注册进当前 profile；重复执行是安全的 —— 配置被重置或目录被移动之后，重跑一遍即可修复。
+It writes the `link:` dependency and the bundle entry into
+`%USERPROFILE%\.dsh\profiles\desktop\package.json` (backup at `package.json.bak`, written
+without a BOM), then links the package into `node_modules\@local` with a junction.
 
-卸载：
+Useful switches: `-Profile <name>` (default `desktop`), `-Source <path>`, `-Target <path>`
+(copy there first), `-Lang <code>` (bake a default UI language).
 
-```powershell
-powershell -ExecutionPolicy Bypass -File .\uninstall.ps1
-```
-
-> [!NOTE]
-> 让 DeepSeek 自己去 GitHub 找仓库地址来完成安装的方式**尚未确认可用**。可以尝试，但有概率不工作 —— 失败时请改用上面两种方式。
-
-> [!TIP]
-> 装好了但界面没有变化？按 <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>G</kbd> 关掉插件全部材质再恢复，就能判断问题出在插件还是 DSH 本身。
-
-### 诊断工具
-
-DSH 更新后界面元素可能改名，用这组快捷键重新定位目标、查清材质画在哪：
-
-| 快捷键 | 作用 |
-| :-- | :-- |
-| <kbd>Alt</kbd> + 点击 | 打印元素的类名链，用于重新定位目标 |
-| <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>H</kbd> | 3 秒内抓取新插入的节点（悬浮提示一类） |
-| <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>K</kbd> | 打印卡片内部谁在画背景 |
-| <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>G</kbd> | 关闭 / 恢复插件全部材质，判断问题是否由插件造成 |
-
-macOS 上 <kbd>Alt</kbd> 即 <kbd>Option</kbd> 键。
-
-### 支持语言
-
-简体中文 · 繁体中文 · English · 日本語 · 한국어 · Español · Français · Deutsch · Русский · Português
-
-### 联系开发者
-
-| 平台 | 地址 |
-| :-- | :-- |
-| Bilibili | [space.bilibili.com/2081483998](https://space.bilibili.com/2081483998) |
-| Bilibili（备用） | [space.bilibili.com/1109324295](https://space.bilibili.com/1109324295) |
-| X | [@Kasou_Hoshino](https://x.com/Kasou_Hoshino) |
-| GitHub | [@KasouHoshino](https://github.com/KasouHoshino) |
-
----
-
-## English
-
-### Overview
-
-A theme extension for DeepSeek Harness: set your own background image or video, then lay a liquid-glass material — inspired by Apple's iOS design — over the whole interface.
-
-- **Theme + custom background** — images and videos both work; GIF and animated WebP keep their animation
-- **HUD liquid glass** — one material across chat, input area, panels and overlays, driven by two sliders
-- **10 interface languages** — pick one in the installer, switch it later in Settings
-- **Built-in diagnostics** — a set of <kbd>Alt</kbd> shortcuts to re-target elements and isolate material conflicts
-
-### Supported Background Formats
-
-| Compatibility | Formats |
-| :-- | :-- |
-| **Supported** | PNG · JPEG / JPG · GIF · static WebP · animated WebP · AVIF · H.264-encoded MP4 · VP8 / VP9 WebM |
-| **Partially supported** | MP4 + H.265 / HEVC · MOV / M4V · OGG · BMP · SVG |
-| **Not supported** | HEIC / HEIF · AVI · MKV · WMV · FLV · TIFF |
-
-"Partially supported" depends on the container / codec combination, and playback can also depend on the runtime environment. If a file refuses to load, transcode it to one of the formats in "Supported" first.
-
-### Liquid Glass
-
-Inspired by Apple's iOS design style: one material runs through most surfaces, and all of it is driven by two sliders — tune one place and everything stays consistent.
-
-| Area | Surfaces |
-| :-- | :-- |
-| **Chat** | message bubbles, message cards, code blocks (including the header row), inline code, tag strip |
-| **Input area** | input box card, the small widgets below it, command preview panel |
-| **Panels** | onboarding panel, side panel, scroll view, terminal screen |
-| **Overlays** | dialogs, menus, context tooltip bubbles, file preview cards, tool cards |
-
-### Installation
-
-Two methods — use either one.
-
-#### Option 1: EXE installer
-
-1. Download `dsh-custom-background-setup_by_Nagisa.exe` from Releases and run it
-2. Choose an installation directory (default `%LOCALAPPDATA%\DSH\plugins\dsh-custom-background_by_Nagisa`)
-3. Choose a language
-4. Optionally tick "restart DSH when finished"
-
-The installer is an unsigned self-extractor, so SmartScreen may ask once — choose "More info → Run anyway". No Node, no terminal, no copy-paste.
-
-#### Option 2: Workspace installation
-
-For developers, or to have the agent install the plugin into the workspace itself. From the plugin folder:
-
-```powershell
-powershell -ExecutionPolicy Bypass -File .\install.ps1
-```
-
-Then restart DSH. The script registers the plugin as a `link:` dependency in the current profile; re-running it is safe — it is also the fix after a profile reset or a moved folder.
-
-To uninstall:
+Remove it again with:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\uninstall.ps1
 ```
 
-> [!NOTE]
-> Having DeepSeek look up the GitHub repository address and install from it **has not been confirmed to work**. You can try it, but there is a chance it won't — if it fails, use one of the two methods above.
+## What it does
 
-> [!TIP]
-> Installed but nothing changed? Press <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>G</kbd> to turn all of the plugin's materials off and back on — that tells a plugin-caused problem apart from DSH itself.
+**Wallpaper** (painted on the shell frame, never on `body` — a body-level layer sits
+below the shell's own opaque background and is invisible):
 
-### Diagnostics
+| Mode | Notes |
+|---|---|
+| No wallpaper | `preset: ''` — the shell keeps its own background (the built-in gradients were removed) |
+| Local picture | crop step (drag + zoom, frame = window aspect) → native pixels → lossless PNG ≤ 6 MP, else JPEG 0.95 |
+| Picture link | `https://` URL, used as-is (no crop) |
+| GIF / animated WebP | original file stored untouched, animation preserved (no crop) |
+| Video (mp4/webm/mov) | real `<video>` layer at `z-index:-2`, muted/loop, paused while the window is hidden |
 
-DSH updates can rename UI elements; use these shortcuts to re-target them and to see which element is painting a surface:
+**Glass** — one material, shared by every surface, driven by `--cb-alpha` / `--cb-blur`:
 
-| Shortcut | What it does |
-| :-- | :-- |
-| <kbd>Alt</kbd> + click | prints the element's class-name chain, for re-targeting |
-| <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>H</kbd> | captures newly inserted nodes within 3 seconds (hover tooltips and similar) |
-| <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>K</kbd> | prints which element inside the card is painting the background |
-| <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>G</kbd> | turns all of the plugin's materials off / back on, to tell whether the plugin is causing the problem |
+- chat bubble `[class*="LOmM4q_bubble"]`
+- composer card `[class*="GRgSLq_card"]` — filter on a pseudo-element (the card hosts
+  fixed popovers; a filter on the element itself would make it their containing block)
+- composer widgets `[class*="GRgSLq_dock"] [class*="_trigger"|"_pill"]`
+- dialogs `[role="dialog"],[aria-modal="true"]`
+- code block `.md-code-block` + `_bannerWrap_` + `_header_1pq26_` + `_content_7gxqk`
+  (the inner `pre`/Shiki background must stay transparent)
+- inline code `[class*="_markdown_"] :not(pre) > code`
+- guide panel `p2k40q_guide`, panel body `_4EiRdG_root`, scroll view `bZwPEG_root`
+- terminal screen `_70dcBq_screen`
+- tool card `HOHHba_card` with a transparent header row, message card `_card_38jqx_`,
+  context tooltip `_bubble_44yfq_`, file preview `K5rwea_file`, "load older" button
+  `V4vHZW_older > button`
+- modal backdrop `AnXs9G_mask` — deliberately the opposite of glass: fully transparent, no
+  filter, so overlays float over the wallpaper without dimming it
+- tabs `[class*="_tab_6nhg2_"]` — `keepOnHover` re-applies the fill on `:hover` /
+  `:focus-visible`, otherwise the shell repaints a hovered tab as transparent
 
-On macOS, <kbd>Alt</kbd> is the <kbd>Option</kbd> key.
+**Rule for nested containers**: exactly one element per region may carry the fill — the
+outermost container. Its children stay transparent (shape only). Two stacked translucent
+whites do not sum linearly (`1-(1-a)²`), so any second fill instantly reads "heavier"
+than a bubble, and no single number makes both match.
 
-### Supported Languages
+**Guide entries (two special mechanisms, both in `client.js`)**
 
-简体中文 · 繁体中文 · English · 日本語 · 한국어 · Español · Français · Deutsch · Русский · Português
+1. *Hover mirror* — on `pointerover` over `button[class*="-4GESq_main"]`, its resolved
+   `background-color / background-image / box-shadow / border-color / transform` are read
+   and written to `--cb-hover-*`; the entry containers' `:hover` rules then reference those
+   variables, so the whole row reacts exactly like the button (even if it does nothing).
+   Throttled to one read per 120 ms per element.
+2. *Appearance clone* — the "new terminal" row is a UI-kit ghost button whose own fill is
+   dark. A normal entry button's computed style (49 properties) is copied onto it inline,
+   once per change (change is detected by hashing the reference style, coalesced with
+   `requestAnimationFrame`). Handlers and layout are untouched.
 
-### Developer Contact
+**Sliders** (Settings → General → Background): transparency, frost, text readability
+(readability adds a veil over the wallpaper — a real scrim element in video mode — and
+does not touch the text).
 
-| Platform | Link |
-| :-- | :-- |
-| Bilibili | [space.bilibili.com/2081483998](https://space.bilibili.com/2081483998) |
-| Bilibili (backup) | [space.bilibili.com/1109324295](https://space.bilibili.com/1109324295) |
-| X | [@Kasou_Hoshino](https://x.com/Kasou_Hoshino) |
-| GitHub | [@KasouHoshino](https://github.com/KasouHoshino) |
+## Storage
 
----
+- `localStorage["dsh-custom-background.prefs"]` — preset id, image/video key, sliders
+  (a few hundred bytes).
+- IndexedDB `dsh-custom-background` / `images` — the picture or video blob itself, which
+  is what allows full resolution (localStorage caps at ~5 MB).
 
-## License
+## Implementation notes (learned the hard way)
 
-MIT — see [LICENSE](LICENSE).
+1. **Hash class names change per build.** `_content_7gxqk_74` style suffixes are not
+   stable; `HOHHba_` / `LOmM4q_` / `GRgSLq_` prefixes have been stable so far.
+2. **`var(--cb-*)` does not resolve inside inline styles** on some shell components —
+   write concrete values there (`rgba(255,255,255,0.54)`), not variables.
+3. **Never put `backdrop-filter` on an ancestor of `position: fixed` content** (sidebar
+   column, message body). It makes that element the containing block, which moves
+   permission cards / popovers and shows up as the transcript jumping. Use a
+   pseudo-element instead.
+4. **Don't change paddings/margins of message containers** — the shell scrolls to
+   elements, and any height change makes that scroll land somewhere else.
+5. `background-image` cannot take `center / cover`; use the longhand
+   `background-size` / `background-position` / `background-repeat`.
+6. **Same fill does not mean same look.** A translucent white over the wallpaper
+   (composer dock buttons) reads much lighter than the same value over the shell's
+   near-opaque panel white (guide entries). The guide entries therefore *sample* a dock
+   button's computed colour, blur and shadow, then scale the alpha by ~0.28. Comparing
+   resolved values in the console proves the numbers match — the difference is the
+   backdrop, not the declaration.
+7. **Don't style a text link as a surface.** `p2k40q_moreAnchor` is an inline "more"
+   link; giving it a fill, a shadow or even just a `backdrop-filter` paints a rectangle
+   around the text (the element has no rounded box of its own). It is excluded on
+   purpose.
+8. **A dark band flashing on relayout = filters / shadows on repeated surfaces.** A
+   `backdrop-filter` (or a dark `box-shadow`) on every message bubble makes the browser
+   re-rasterise each one whenever the column is re-laid out (a sidebar opening or going
+   full screen), which shows up as a black strip at the text's left edge for a couple of
+   frames. Targets that repeat per message use `noShadow` (and large resizing containers
+   such as `_4EiRdG_root` / `bZwPEG_root` use `noBlur` + `noShadow`).
+9. **Never override `--dsw-scrollbar-width`.** It changes the scrollbar's footprint, so
+   the transcript's text width jumps whenever a scrollbar appears (e.g. toggling the
+   right sidebar).
+10. **Theme switches do not reach imperatively painted elements.** The video scrim is a
+    real element whose colour is written from JS, so an attribute observer on
+    `<body data-ds-dark-theme>` / `<html data-theme>` recomputes it; the wallpaper
+    stylesheet is regenerated at the same moment (and skipped when the text is unchanged).
+11. **`position: relative` breaks absolutely positioned children.** Putting it on the
+    panel containers re-anchored the sidebar's floating chrome and slid it sideways. Those
+    containers therefore get fill only — no positioning, no filter.
+12. **Inline writes are wiped by React.** Painting a React-rendered element with
+    `element.style.setProperty` looks like it does nothing: the next render rewrites the
+    `style` attribute. A stylesheet rule with `!important` beats inline styles (as long as
+    those are not `!important` themselves) and survives re-renders — prefer it.
+13. **A glass row needs its children cleared.** When only the rim of a row changes colour,
+    the row itself is painted but its child spans each paint their own fill on top. Give the
+    row the material and set `background: transparent` on `row *`, then the whole strip
+    shows the glass. `HOHHba_header` in the code is exactly this case.
+14. **Do not override the font tokens.** The shell's stack
+    (`-apple-system, "Segoe UI", "PingFang SC", "Microsoft YaHei", …`) already resolves to
+    the platform's own faces, and it defines several tokens (`--dsh-font-family-text`,
+    `-text-default`, `-code`, `-terminal`). Overriding only some of them leaves the rest on
+    the shell's family, so glyphs come from two families with different ascent/descent and
+    the line looks like "some characters are taller than others". Any font the platform does
+    not have (PingFang, SF, HarmonyOS Sans on Windows) silently falls through, which reads as
+    "the setting does nothing". Install the font first, then change the shell's own setting.
+15. **Substring selectors hit sibling components.** `[class*="K5rwea_file"]` also matched
+    `K5rwea_fileBody`, so the middle of the card got a second glass layer and read one step
+    deeper than its rim. Use `[class~="…"]` (exact token) for a single element, and treat
+    "one region looks a step darker" as a stacked-layer symptom rather than a colour problem.
+16. **One filled layer per region beats tuning.** Every time two glass layers were stacked,
+    matching them to a single-layer neighbour by adjusting `boost` failed: the result also
+    depends on what is behind. The durable fix is to make the inner row `transparent`
+    (`mode: 'transparent'`) so the region really has one layer — used by the tool-card header
+    and the code-block header.
+17. **A nested `backdrop-filter` cannot blur the wallpaper.** The composer card already
+    filters its backdrop, so anything inside it (the command-preview rows `F07MqG_row`) that
+    also sets `backdrop-filter` samples the card's already-flattened output. The declaration
+    is present in computed styles, yet the frost slider has no visible effect — the element
+    only *looks* like glass. Either let the parent be the single filter for that region, or
+    accept fill-only styling there. Never ship a filter that ignores the slider.
 
-技术细节与实现笔记见 [DEVELOPMENT.md](DEVELOPMENT.md) · Implementation notes live in [DEVELOPMENT.md](DEVELOPMENT.md).
+## Performance notes
 
-<div align="center">
+- The only observer is an attribute-only `MutationObserver` on two nodes (theme switch);
+  the listeners are `pointerover` (throttled to one read per 120 ms, and only when the
+  pointer is over the guide button), `resize` (crop panel only) and `visibilitychange`
+  (video wallpaper), all removed on unload.
+- Sliders update two CSS variables, and only when their value actually changes; the
+  wallpaper stylesheet is rewritten only when its resolved text differs.
+- The guide entry appearance clone hashes the reference's computed style and skips the
+  write when nothing changed; subscription callbacks are coalesced with
+  `requestAnimationFrame` and debounced by 140 ms, so dragging a slider does not clone 49
+  properties per frame.
+- `pointerover` rejects unrelated targets with two class-name checks before it walks up with
+  `closest()`, so the handler costs almost nothing on the rest of the page.
+- Menus and dialogs derive their blur from the frost variable
+  (`calc(var(--cb-blur) * 1.3)`) instead of a constant; a constant kept them blurred at
+  frost 0 and also forced a second composited layer that ignored `data-cb-noblur`.
+- Pictures and videos live in IndexedDB, so `localStorage` stays a few hundred bytes.
 
-如果这个插件对你有帮助，欢迎给一个 ⭐
-If it helps, a ⭐ goes a long way.
+## Diagnostics
 
-</div>
+- **Alt + click** — copy an element's class chain (probe).
+- **Alt + Shift + G** — toggle every stylesheet this plugin injects, to attribute a visual
+  glitch to the plugin or to the shell.
+
+## Probe
+
+Hold **Alt** and click any element: a panel prints the class chain of the click target
+and its three ancestors, text pre-selected for `Ctrl+C`. It only fires while Alt is held
+and is removed on unload. Useful for re-targeting surfaces after a DSH update.
+
+Press **Alt + Shift + H**, then hover the widget within 3 seconds: every node inserted in
+that window is listed with its classes and text. This is the way to name an element that
+disappears as soon as the pointer leaves it (hover tooltips, popovers).
+
+Press **Alt + Shift + G** to disable every stylesheet this plugin injected, which tells a
+plugin-caused glitch apart from one the shell itself produces.
+
+## Uninstall
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\uninstall.ps1
+```
+
+Then restart DSH and delete this directory. The script removes the `link:` dependency and
+the bundle entry from the profile's `package.json` (leaving `package.json.bak` behind).
