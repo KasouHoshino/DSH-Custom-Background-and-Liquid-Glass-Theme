@@ -1,4 +1,4 @@
-# KasouHoshino-DSH-Custom-Background-and-Liquid-Glass-Theme
+DSH-Custom-Background-and-Liquid-Glass-Theme
 **With this plugin, we can customize the background of the DeepSeek harness and change the HUD style to liquid glass. After placing the file into the DeepSeek workspace, just tell it: "Help me install this plugin in the workspace." Once installation is complete, you need to restart DeepSeek and enable it in your General Settings.**
 ### （The method of installing by having DeepSeek itself find the GitHub repository address has not been confirmed to work. You can try this installation method, but there is a chance it won't work.）
 
