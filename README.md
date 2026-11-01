@@ -111,6 +111,9 @@ macOS 上 <kbd>Alt</kbd> 即 <kbd>Option</kbd> 键。
 | X | [@Kasou_Hoshino](https://x.com/Kasou_Hoshino) |
 | GitHub | [@KasouHoshino](https://github.com/KasouHoshino) |
 
+<img width="1279" height="797" alt="屏幕截图 2026-11-01 002917" src="https://github.com/user-attachments/assets/f8cfd90d-974f-429f-82b4-cf408cbe0454" />
+<img width="585" height="581" alt="屏幕截图 2026-11-01 002926" src="https://github.com/user-attachments/assets/4e0fb8c6-70ac-45e3-ad0b-27b4d753b2a6" />
+
 ---
 
 ## English
@@ -205,6 +208,8 @@ On macOS, <kbd>Alt</kbd> is the <kbd>Option</kbd> key.
 | Bilibili (backup) | [space.bilibili.com/1109324295](https://space.bilibili.com/1109324295) |
 | X | [@Kasou_Hoshino](https://x.com/Kasou_Hoshino) |
 | GitHub | [@KasouHoshino](https://github.com/KasouHoshino) |
+<img width="1279" height="797" alt="屏幕截图 2026-11-01 002917" src="https://github.com/user-attachments/assets/f8cfd90d-974f-429f-82b4-cf408cbe0454" />
+<img width="585" height="581" alt="屏幕截图 2026-11-01 002926" src="https://github.com/user-attachments/assets/4e0fb8c6-70ac-45e3-ad0b-27b4d753b2a6" />
 
 ---
 
